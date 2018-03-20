@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Django Ninja Gold!!!</title>
+    {% load static %}
+    <link rel='stylesheet' href="{% static 'css/gold/gold.css' %}" media="screen" title="no title" charset="utf-8">
+</head>
+<body>
+    <div id='wrapper'>
+        <div>
+            <h1>The Ninja Entrepreneur!!!</h1>
+            <h2>Your Gold:</h2>
+            <p class='score'>{{ request.session.your_gold }}</p>
+        </div>
+        <div class='places'>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <h2>Farm</h2>
+                <p>(earns 10-20 golds)</p>
+                <input type="hidden" name="building" value="farm" />
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <h2>Cave</h2>
+                <p>(earns 5-10 golds)</p> 
+                <input type="hidden" name="building" value="cave" />
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <h2>House</h2>
+                <p>(earns 2-5 golds)</p>
+                <input type="hidden" name="building" value="house" />
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            <form action="/process_money" method="post">
+                {% csrf_token %}
+                <h2>Casino</h2>
+                <p>(earns/takes 0-50 golds)</p>
+                <input type="hidden" name="building" value="casino" />
+                <input type="submit" value="Find Gold!"/>
+            </form>
+            <p class='activities'>Activities:</p>
+            <div class='activites'>
+                {% for x in request.session.activities %}
+                    {% if request.session.temp > 0 %}
+                        {{ x | safe }}
+                    {% else %}
+                        {{ x | safe }}
+                    {% endif %}     
+                {% endfor %}
+            </div>
+            <a href="/reset"><button>Reset Adventure</button></a>
+        </div>
+    </div>
+    </body>
+</html>
